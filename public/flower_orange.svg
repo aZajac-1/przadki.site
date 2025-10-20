@@ -1,0 +1,16 @@
+<!-- Minimalistyczny kwiatek: 7 bardziej okrągłych płatków, różowe, środek pomarańczowy -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Minimalistyczny kwiatek z okrągłymi płatkami">
+  <!-- płatki -->
+  <g stroke="#ffc58b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="50" cy="35" rx="13" ry="13" fill="#ffc58b"/>
+    <ellipse cx="50" cy="35" rx="13" ry="13" transform="rotate(51.428571 50 50)" fill="#ffc58b"/>
+    <ellipse cx="50" cy="35" rx="13" ry="13" transform="rotate(102.857142 50 50)" fill="#ffc58b"/>
+    <ellipse cx="50" cy="35" rx="13" ry="13" transform="rotate(154.285713 50 50)" fill="#ffc58b"/>
+    <ellipse cx="50" cy="35" rx="13" ry="13" transform="rotate(205.714284 50 50)" fill="#ffc58b"/>
+    <ellipse cx="50" cy="35" rx="13" ry="13" transform="rotate(257.142855 50 50)" fill="#ffc58b"/>
+    <ellipse cx="50" cy="35" rx="13" ry="13" transform="rotate(308.571426 50 50)" fill="#ffc58b"/>
+  </g>
+
+  <!-- środek kwiatka -->
+  <circle cx="50" cy="50" r="10" fill="#ff84cc" stroke="#ff84cc" stroke-width="2"/>
+</svg>
