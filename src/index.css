@@ -8,7 +8,10 @@
   /* Kolory */
   --color-pink: #ff84cc;
   --color-blue: #bddaff;
+  --color-pink-dark: #ff5599;
+  --color-blue-dark: #84b0ff;
   --color-orange: #ffc58b;
+  --color-orange-dark: #ff9955;
 
   font-family: 'Poppins', sans-serif;
   line-height: 1.5;
@@ -67,6 +70,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
   transition: color 0.25s;
+  display: block;
 }
 
 a:hover {
