@@ -68,6 +68,37 @@ The deployment script will:
 
 Your site will be live at **https://przadki.site** in about 30 seconds!
 
+## Team Access
+
+### Adding Team Members
+
+To allow other team members to deploy:
+
+1. **Team member**: Follow the [SSH Setup Guide](SSH_SETUP_GUIDE.md) to generate and share their SSH public key
+
+2. **Administrator**: Add their SSH key to the server:
+   ```bash
+   # Make the script executable (first time only)
+   chmod +x add-ssh-key.sh
+
+   # Add the team member's public key
+   ./add-ssh-key.sh "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJl... user@example.com"
+
+   # Or read from a file
+   ./add-ssh-key.sh "$(cat teammate-key.pub)"
+   ```
+
+3. **Team member**: Test SSH connection and deploy:
+   ```bash
+   # Test connection
+   ssh root@46.62.230.247
+
+   # Deploy
+   ./deploy.sh
+   ```
+
+That's it! All team members with SSH access can deploy using the same `./deploy.sh` script.
+
 ## Manual Deployment (Alternative)
 
 If you prefer to deploy manually:
