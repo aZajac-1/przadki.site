@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Deployment script for przadki.site
+# Deployment script for wedding.przadki.site
 # Run this script FROM YOUR LOCAL MACHINE
 
 set -e
 
 SERVER_USER="root"
 SERVER_IP="46.62.230.247"
-SERVER_PATH="/var/www/przadki.site"
+SERVER_PATH="/var/www/wedding.przadki.site"
 BUILD_DIR="dist"
 
-echo "🚀 Deploying przadki.site to production..."
+echo "🚀 Deploying wedding.przadki.site to production..."
 
 # Build the project
 echo "📦 Building project..."
@@ -42,5 +42,5 @@ ssh "$SERVER_USER@$SERVER_IP" "systemctl reload nginx"
 
 echo ""
 echo "✨ Deployment complete!"
-echo "🌐 Your site is live at: https://przadki.site"
+echo "🌐 Your site is live at: https://wedding.przadki.site"
 echo ""
