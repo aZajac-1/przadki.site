@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A React 19 + TypeScript wedding event website (przadki.site) for Ola and Piotr's wedding on July 4, 2026. Hosted on a Hetzner server with automated deployment.
+A React 19 + TypeScript wedding event website (wedding.przadki.site) for Ola and Piotr's wedding on July 4, 2026. Hosted on a Hetzner server with automated deployment.
 
 ## Commands
 
@@ -48,7 +48,7 @@ src/
 
 ### Deployment
 - Server: Hetzner (46.62.230.247) with Nginx + SSL
-- Site location: `/var/www/przadki.site/`
+- Site location: `/var/www/wedding.przadki.site/`
 - Deploy via `deploy.sh` which runs build and rsync to server
 
 ## Important Notes

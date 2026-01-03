@@ -1,11 +1,11 @@
-# Deployment Guide for przadki.site
+# Deployment Guide for wedding.przadki.site
 
 Simple deployment setup for your React/Vite static site to Hetzner server.
 
 ## Server Details
 
 - **IP**: 46.62.230.247
-- **Domain**: przadki.site
+- **Domain**: wedding.przadki.site
 - **Server OS**: Ubuntu
 - **Web Server**: nginx
 
@@ -25,19 +25,19 @@ ssh root@46.62.230.247 'chmod +x /root/server-setup.sh && /root/server-setup.sh'
 
 ```bash
 # From your local machine
-scp nginx.conf root@46.62.230.247:/etc/nginx/sites-available/przadki.site
+scp nginx.conf root@46.62.230.247:/etc/nginx/sites-available/wedding.przadki.site
 ```
 
 ### 3. Enable the site
 
 ```bash
-ssh root@46.62.230.247 'ln -s /etc/nginx/sites-available/przadki.site /etc/nginx/sites-enabled/ && nginx -t && systemctl reload nginx'
+ssh root@46.62.230.247 'ln -s /etc/nginx/sites-available/wedding.przadki.site /etc/nginx/sites-enabled/ && nginx -t && systemctl reload nginx'
 ```
 
 ### 4. Set up SSL certificate (Let's Encrypt)
 
 ```bash
-ssh root@46.62.230.247 'certbot --nginx -d przadki.site -d www.przadki.site --non-interactive --agree-tos -m your-email@example.com'
+ssh root@46.62.230.247 'certbot --nginx -d wedding.przadki.site --non-interactive --agree-tos -m your-email@example.com'
 ```
 
 **Important**: Replace `your-email@example.com` with your actual email address.
@@ -46,7 +46,7 @@ The SSL certificate will auto-renew every 90 days.
 
 ### 5. Verify the server is ready
 
-Visit http://przadki.site - you should see a "Coming Soon" placeholder page.
+Visit http://wedding.przadki.site - you should see a "Coming Soon" placeholder page.
 
 ## Deploying Your Site
 
@@ -66,7 +66,7 @@ The deployment script will:
 3. Set correct permissions
 4. Reload nginx
 
-Your site will be live at **https://przadki.site** in about 30 seconds!
+Your site will be live at **https://wedding.przadki.site** in about 30 seconds!
 
 ## Team Access
 
@@ -108,10 +108,10 @@ If you prefer to deploy manually:
 npm run build
 
 # Upload to server
-rsync -avz --delete dist/ root@46.62.230.247:/var/www/przadki.site/
+rsync -avz --delete dist/ root@46.62.230.247:/var/www/wedding.przadki.site/
 
 # Set permissions and reload
-ssh root@46.62.230.247 'chown -R www-data:www-data /var/www/przadki.site && systemctl reload nginx'
+ssh root@46.62.230.247 'chown -R www-data:www-data /var/www/wedding.przadki.site && systemctl reload nginx'
 ```
 
 ## Troubleshooting
@@ -144,9 +144,9 @@ ssh root@46.62.230.247 'systemctl reload nginx'
 ## File Structure on Server
 
 ```
-/var/www/przadki.site/          # Your site files
-/etc/nginx/sites-available/przadki.site  # nginx config
-/etc/nginx/sites-enabled/przadki.site    # symlink to above
+/var/www/wedding.przadki.site/          # Your site files
+/etc/nginx/sites-available/wedding.przadki.site  # nginx config
+/etc/nginx/sites-enabled/wedding.przadki.site    # symlink to above
 ```
 
 ## Future Backend Integration
@@ -174,8 +174,7 @@ When you're ready to add a backend:
 
 ## DNS Configuration
 
-Make sure your DNS A records point to your server:
-- `przadki.site` → `46.62.230.247`
-- `www.przadki.site` → `46.62.230.247`
+Make sure your DNS A record points to your server:
+- `wedding.przadki.site` → `46.62.230.247` (A record with host "wedding")
 
 If you just configured DNS, wait 5-60 minutes for propagation.
