@@ -47,9 +47,10 @@ src/
 - Dark mode support via `prefers-color-scheme: dark`
 
 ### Deployment
-- Server: Hetzner (46.62.230.247) with Nginx + SSL
-- Site location: `/var/www/wedding.przadki.site/`
-- Deploy via `deploy.sh` which runs build and rsync to server
+- Server: Hetzner (46.62.230.247) with Docker + kamal-proxy
+- Static files served by nginx:alpine container
+- kamal-proxy handles TLS termination (automatic Let's Encrypt)
+- Deploy via `deploy.sh` which builds, rsyncs, and restarts the container
 
 ## Important Notes
 

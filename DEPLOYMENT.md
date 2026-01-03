@@ -1,56 +1,17 @@
 # Deployment Guide for wedding.przadki.site
 
-Simple deployment setup for your React/Vite static site to Hetzner server.
+Deployment for React/Vite static site using Docker + kamal-proxy.
 
 ## Server Details
 
 - **IP**: 46.62.230.247
 - **Domain**: wedding.przadki.site
-- **Server OS**: Ubuntu
-- **Web Server**: nginx
-
-## One-Time Server Setup
-
-Run these steps **once** to configure your server:
-
-### 1. Upload and run the server setup script
-
-```bash
-# From your local machine
-scp server-setup.sh root@46.62.230.247:/root/
-ssh root@46.62.230.247 'chmod +x /root/server-setup.sh && /root/server-setup.sh'
-```
-
-### 2. Upload nginx configuration
-
-```bash
-# From your local machine
-scp nginx.conf root@46.62.230.247:/etc/nginx/sites-available/wedding.przadki.site
-```
-
-### 3. Enable the site
-
-```bash
-ssh root@46.62.230.247 'ln -s /etc/nginx/sites-available/wedding.przadki.site /etc/nginx/sites-enabled/ && nginx -t && systemctl reload nginx'
-```
-
-### 4. Set up SSL certificate (Let's Encrypt)
-
-```bash
-ssh root@46.62.230.247 'certbot --nginx -d wedding.przadki.site --non-interactive --agree-tos -m your-email@example.com'
-```
-
-**Important**: Replace `your-email@example.com` with your actual email address.
-
-The SSL certificate will auto-renew every 90 days.
-
-### 5. Verify the server is ready
-
-Visit http://wedding.przadki.site - you should see a "Coming Soon" placeholder page.
+- **Proxy**: kamal-proxy (handles TLS automatically)
+- **Container**: nginx:alpine serving static files
 
 ## Deploying Your Site
 
-After the one-time setup, deploy your site anytime with:
+Deploy your site anytime with:
 
 ```bash
 # Make the deploy script executable (first time only)
@@ -63,10 +24,11 @@ chmod +x deploy.sh
 The deployment script will:
 1. Build your Vite project (`npm run build`)
 2. Upload the built files to your server
-3. Set correct permissions
-4. Reload nginx
+3. Create healthcheck file (`/up`)
+4. Start/restart Docker container
+5. Register with kamal-proxy (with automatic TLS)
 
-Your site will be live at **https://wedding.przadki.site** in about 30 seconds!
+Your site will be live at **https://wedding.przadki.site**
 
 ## Team Access
 
@@ -78,26 +40,15 @@ To allow other team members to deploy:
 
 2. **Administrator**: Add their SSH key to the server:
    ```bash
-   # Make the script executable (first time only)
    chmod +x add-ssh-key.sh
-
-   # Add the team member's public key
    ./add-ssh-key.sh "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJl... user@example.com"
-
-   # Or read from a file
-   ./add-ssh-key.sh "$(cat teammate-key.pub)"
    ```
 
 3. **Team member**: Test SSH connection and deploy:
    ```bash
-   # Test connection
    ssh root@46.62.230.247
-
-   # Deploy
    ./deploy.sh
    ```
-
-That's it! All team members with SSH access can deploy using the same `./deploy.sh` script.
 
 ## Manual Deployment (Alternative)
 
@@ -110,71 +61,66 @@ npm run build
 # Upload to server
 rsync -avz --delete dist/ root@46.62.230.247:/var/www/wedding.przadki.site/
 
-# Set permissions and reload
-ssh root@46.62.230.247 'chown -R www-data:www-data /var/www/wedding.przadki.site && systemctl reload nginx'
+# Create healthcheck
+ssh root@46.62.230.247 "echo 'OK' > /var/www/wedding.przadki.site/up"
+
+# Restart container and register with proxy
+ssh root@46.62.230.247 '
+  docker rm -f wedding 2>/dev/null || true
+  docker run -d --name wedding --network kamal --restart unless-stopped \
+    -v /var/www/wedding.przadki.site:/usr/share/nginx/html:ro nginx:alpine
+  docker exec kamal-proxy kamal-proxy deploy wedding \
+    --target="wedding:80" --host="wedding.przadki.site" --tls
+'
 ```
 
 ## Troubleshooting
 
-### Check nginx status
+### Check container status
 ```bash
-ssh root@46.62.230.247 'systemctl status nginx'
+ssh root@46.62.230.247 'docker ps -a | grep wedding'
 ```
 
-### Check nginx logs
+### Check container logs
 ```bash
-ssh root@46.62.230.247 'tail -f /var/log/nginx/error.log'
+ssh root@46.62.230.247 'docker logs wedding'
 ```
 
-### Test nginx configuration
+### Check kamal-proxy status
 ```bash
-ssh root@46.62.230.247 'nginx -t'
+ssh root@46.62.230.247 'docker exec kamal-proxy kamal-proxy list'
 ```
 
-### Check SSL certificate status
+### Restart container manually
 ```bash
-ssh root@46.62.230.247 'certbot certificates'
+ssh root@46.62.230.247 'docker restart wedding'
 ```
 
-### Reload nginx after config changes
+### Remove from kamal-proxy and re-register
 ```bash
-ssh root@46.62.230.247 'systemctl reload nginx'
+ssh root@46.62.230.247 '
+  docker exec kamal-proxy kamal-proxy remove wedding
+  docker exec kamal-proxy kamal-proxy deploy wedding \
+    --target="wedding:80" --host="wedding.przadki.site" --tls
+'
 ```
 
-## File Structure on Server
+## Architecture
 
 ```
-/var/www/wedding.przadki.site/          # Your site files
-/etc/nginx/sites-available/wedding.przadki.site  # nginx config
-/etc/nginx/sites-enabled/wedding.przadki.site    # symlink to above
+Internet
+    |
+    v
+kamal-proxy (port 443, TLS termination)
+    |
+    v
+wedding container (nginx:alpine, port 80)
+    |
+    v
+/var/www/wedding.przadki.site (static files)
 ```
-
-## Future Backend Integration
-
-When you're ready to add a backend:
-
-1. **Keep this nginx setup** for serving your frontend
-2. Add a new location block in nginx.conf to proxy API requests:
-   ```nginx
-   location /api {
-       proxy_pass http://localhost:3000;
-       proxy_set_header Host $host;
-       proxy_set_header X-Real-IP $remote_addr;
-   }
-   ```
-3. Deploy your backend separately (that's where Kamal could come in!)
-4. Your frontend will continue to be served as static files
-
-## Security Notes
-
-- Firewall (ufw) is configured to allow only HTTP, HTTPS, and SSH
-- SSL certificate is automatically renewed by certbot
-- Security headers are configured in nginx.conf
-- Hidden files (like .git, .env) are blocked by nginx
 
 ## DNS Configuration
 
 Make sure your DNS A record points to your server:
-- `wedding.przadki.site` → `46.62.230.247` (A record with host "wedding")
-
-If you just configured DNS, wait 5-60 minutes for propagation.
+- `wedding.przadki.site` -> `46.62.230.247`

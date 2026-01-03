@@ -1,46 +1,36 @@
 #!/bin/bash
-
-# Deployment script for wedding.przadki.site
-# Run this script FROM YOUR LOCAL MACHINE
-
 set -e
 
-SERVER_USER="root"
 SERVER_IP="46.62.230.247"
+SERVER_USER="root"
 SERVER_PATH="/var/www/wedding.przadki.site"
-BUILD_DIR="dist"
 
-echo "🚀 Deploying wedding.przadki.site to production..."
-
-# Build the project
-echo "📦 Building project..."
+echo "Building..."
 npm run build
 
-# Check if build was successful
-if [ ! -d "$BUILD_DIR" ]; then
-    echo "❌ Build failed! Directory $BUILD_DIR not found."
-    exit 1
-fi
-
-echo "✅ Build complete!"
-
-# Deploy to server using rsync
-echo "📤 Uploading files to server..."
+echo "Uploading..."
 rsync -avz --delete \
-    --exclude '.git' \
-    --exclude 'node_modules' \
-    --exclude '.env' \
-    "$BUILD_DIR/" "$SERVER_USER@$SERVER_IP:$SERVER_PATH/"
+  --exclude '.git' \
+  --exclude 'node_modules' \
+  --exclude '.env' \
+  dist/ ${SERVER_USER}@${SERVER_IP}:${SERVER_PATH}/
 
-# Set correct permissions
-echo "🔐 Setting file permissions..."
-ssh "$SERVER_USER@$SERVER_IP" "chown -R www-data:www-data $SERVER_PATH"
+echo "Creating healthcheck file..."
+ssh ${SERVER_USER}@${SERVER_IP} "echo 'OK' > ${SERVER_PATH}/up"
 
-# Reload nginx
-echo "🔄 Reloading nginx..."
-ssh "$SERVER_USER@$SERVER_IP" "systemctl reload nginx"
+echo "Starting/restarting container..."
+ssh ${SERVER_USER}@${SERVER_IP} '
+  docker rm -f wedding 2>/dev/null || true
+  docker run -d \
+    --name wedding \
+    --network kamal \
+    --restart unless-stopped \
+    -v /var/www/wedding.przadki.site:/usr/share/nginx/html:ro \
+    nginx:alpine
+  docker exec kamal-proxy kamal-proxy deploy wedding \
+    --target="wedding:80" \
+    --host="wedding.przadki.site" \
+    --tls
+'
 
-echo ""
-echo "✨ Deployment complete!"
-echo "🌐 Your site is live at: https://wedding.przadki.site"
-echo ""
+echo "Done! https://wedding.przadki.site"
