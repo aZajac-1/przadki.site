@@ -113,7 +113,7 @@ const MainPage = () => {
               <h3 className="info-box-title">Prezenty</h3>
               <p className="info-box-text">
                 <span>Kwiatów i wina będzie pod dostatkiem. Jeśli chcesz nam coś kupić, </span>
-                <a href="https://www.coffeedesk.pl/kawa/metoda-parzenia/przelewowe-metody-parzenia/?filter=opakowanie:250-g,200-g,252-g,10-saszetek&p=12&order=topseller"
+                <a href="https://www.coffeedesk.pl/kawa/metoda-parzenia/przelewowe-metody-parzenia/?filter=opakowanie:250-g,200-g,252-g,10-saszetek&order=topseller"
                 target="_blank" className="pink-text" style={{textDecoration: 'underline', display: 'inline'}}>kup nam kawę!</a>
               </p>
             </div>
