@@ -6,12 +6,12 @@
 
 :root {
   /* Kolory */
-  --color-pink: #ff84cc;
+  --color-pink: #DE67C2;
   --color-blue: #bddaff;
-  --color-pink-dark: #ff5599;
+  --color-pink-dark: #b43a98;
   --color-blue-dark: #84b0ff;
-  --color-orange: #ffc58b;
-  --color-orange-dark: #ff9955;
+  --color-orange: #E9983E;
+  --color-orange-dark: #dd7804;
 
   font-family: 'Poppins', sans-serif;
   line-height: 1.5;
@@ -29,7 +29,7 @@
 
 body {
   min-height: 100vh;
-  background-color: #bddaff80;
+  background: rgba(189, 218, 255, 1);
 }
 
 #root {
