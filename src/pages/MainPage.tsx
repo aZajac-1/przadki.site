@@ -72,25 +72,25 @@ const MainPage = () => {
           <div className="info-grid">
           <div className="info-box">
               <div className="info-box-icon">
-                <img src="/1.svg" alt="Posiłki" />
+                <img src="/3.svg" alt="Posiłki" />
               </div>
               <h3 className="info-box-title">Posiłki</h3>
               <p className="info-box-text">
-                Jeśli macie jakiekolwiek ograniczenia żywieniowe, dajcie znać. Z&nbsp;przyjemnością ovnie zadbamy. 
+                Jeśli macie jakiekolwiek ograniczenia żywieniowe, dajcie znać. Z&nbsp;przyjemnością o&nbsp;nie zadbamy. 
               </p>
             </div>
             <div className="info-box">
               <div className="info-box-icon">
-                <img src="/2.svg" alt="Ślub cywilny" />
+                <img src="/5.svg" alt="Ślub cywilny" />
               </div>
               <h3 className="info-box-title">Ślub cywilny</h3>
               <p className="info-box-text">
-                Ceremonia ślubu cywilnego jest krótka. Prosimy o&nbsp;punktualność, abyście nie przegapili ceremonii.
+                Ceremonia ślubu cywilnego jest krótka. Prosimy o&nbsp;punktualność, abyście jej nie przegapili.
               </p>
             </div>
               <div className="info-box">
                 <div className="info-box-icon">
-                  <img src="/3.svg" alt="Buty" />
+                  <img src="/1.svg" alt="Buty" />
                 </div>
                 <h3 className="info-box-title">Buty</h3>
               <p className="info-box-text">
@@ -99,20 +99,22 @@ const MainPage = () => {
             </div>
             <div className="info-box">
               <div className="info-box-icon">
-                <img src="/4.svg" alt="Dress code" />
+                <img src="/2.svg" alt="Dress code" />
               </div>
               <h3 className="info-box-title">Dress code</h3>
               <p className="info-box-text">
-                Czeka nas gorący, letni wieczór. Zachecamy do wyboru kolorowego stroju z&nbsp;lekkich materiałów.
+                Czeka nas gorący, letni wieczór. Zachęcamy do wyboru kolorowego stroju z&nbsp;lekkich materiałów.
               </p>
             </div>
             <div className="info-box">
               <div className="info-box-icon">
-                <img src="/5.svg" alt="Prezenty" />
+                <img src="/4.svg" alt="Prezenty" />
               </div>
               <h3 className="info-box-title">Prezenty</h3>
               <p className="info-box-text">
-                Naszego ulubionego napoju nigdy za wiele. Zamiast kwiatów i&nbsp;wina, chcielibyśmy otrzymać od Was kawę!
+                <span>Kwiatów i wina będzie pod dostatkiem. Jeśli chcesz nam coś kupić, </span>
+                <a href="https://www.coffeedesk.pl/kawa/metoda-parzenia/przelewowe-metody-parzenia/?filter=opakowanie:250-g,200-g,252-g,10-saszetek&p=12&order=topseller"
+                target="_blank" className="pink-text" style={{textDecoration: 'underline', display: 'inline'}}>kup nam kawę!</a>
               </p>
             </div>
           </div>
