@@ -19,9 +19,6 @@
   z-index: 1;
 }
 
-.hero img{
-
-}
 
 /* Invitation Section */
 .invitation {
@@ -235,78 +232,6 @@
   color: #764ba2;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes rotateBackground {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .info {
-    padding: 2rem 1rem;
-  }
-
-  .main-page, .invitation {
-    padding: 2rem 1rem;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.2rem;
-  }
-
-  .info-card {
-    width: 100%;
-  }
-   
-  .invitation-background {
-    animation: none;
-  }
-
-  .main-page {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero-image {
-    display: none;
-  }
-}
-
 /* Info Section */
 .info {
   width: 100%;
@@ -349,6 +274,17 @@
 .info-box-icon {
   font-size: 3.5rem;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+}
+
+.info-box-icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
 }
 
 .info-box-title {
@@ -376,6 +312,207 @@
 
   .address {
     color: #aaaaaa;
+  }
+}
+
+
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateBackground {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-page {
+    overflow-x: hidden;
+  }
+
+  .hero {
+    min-height: unset;
+    padding: 1rem;
+  }
+
+  .hero-main-image {
+    width: 100%;
+    height: auto;
+    max-height: unset;
+    object-fit: cover;
+  }
+
+  .invitation {
+    width: 90%;
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    aspect-ratio: auto;
+    min-height: auto;
+  }
+
+  .invitation-overlay {
+    padding: 1.5rem;
+  }
+
+  .invitation-title {
+    font-size: 2rem;
+  }
+
+  .invitation-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .invitation-box {
+    margin-bottom: 1.5rem;
+  }
+
+  .info-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .info-icon {
+    font-size: 2rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .info {
+    padding: 2rem 1rem;
+    height: auto;
+    min-height: auto;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+
+  .info-box {
+    padding: 1.5rem;
+  }
+
+  .info-box-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    height: 50px;
+  }
+
+  .info-box-icon img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .info-box-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .info-box-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .invitation-background {
+    animation: none;
+  }
+
+  .hero-image {
+    display: none;
+  }
+
+  .margin-bottom-3 {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero {
+    display: none;
+  }
+
+
+  .invitation {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .invitation-overlay {
+    padding: 4rem 1rem;
+  }
+
+  .invitation-background {
+    mask: none;
+    border-radius: 100px;
+    border: 3px solid var(--color-orange);
+  }
+
+  .invitation-title {
+    font-size: 1.5rem;
+  }
+
+  .invitation-subtitle {
+    font-size: 1rem;
+  }
+
+  .info {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .info-box {
+    padding: 1.25rem;
+  }
+
+  .info-box-icon {
+    font-size: 2rem;
+    height: 40px;
+  }
+
+  .info-box-icon img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .info-box-title {
+    font-size: 1.1rem;
+  }
+
+  .info-box-text {
+    font-size: 0.85rem;
+  }
+
+  .info-card {
+    padding: 1.25rem;
   }
 }
 
