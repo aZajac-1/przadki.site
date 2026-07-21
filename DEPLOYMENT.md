@@ -1,11 +1,11 @@
-# Deployment Guide for wedding.przadki.site
+# Deployment Guide for wedding.przadki.us
 
 Deployment for React/Vite static site using Docker + kamal-proxy.
 
 ## Server Details
 
 - **IP**: 46.62.230.247
-- **Domain**: wedding.przadki.site
+- **Domain**: wedding.przadki.us
 - **Proxy**: kamal-proxy (handles TLS automatically)
 - **Container**: nginx:alpine serving static files
 
@@ -28,7 +28,7 @@ The deployment script will:
 4. Start/restart Docker container
 5. Register with kamal-proxy (with automatic TLS)
 
-Your site will be live at **https://wedding.przadki.site**
+Your site will be live at **https://wedding.przadki.us**
 
 ## Team Access
 
@@ -59,18 +59,18 @@ If you prefer to deploy manually:
 npm run build
 
 # Upload to server
-rsync -avz --delete dist/ root@46.62.230.247:/var/www/wedding.przadki.site/
+rsync -avz --delete dist/ root@46.62.230.247:/var/www/wedding/
 
 # Create healthcheck
-ssh root@46.62.230.247 "echo 'OK' > /var/www/wedding.przadki.site/up"
+ssh root@46.62.230.247 "echo 'OK' > /var/www/wedding/up"
 
 # Restart container and register with proxy
 ssh root@46.62.230.247 '
   docker rm -f wedding 2>/dev/null || true
   docker run -d --name wedding --network kamal --restart unless-stopped \
-    -v /var/www/wedding.przadki.site:/usr/share/nginx/html:ro nginx:alpine
+    -v /var/www/wedding:/usr/share/nginx/html:ro nginx:alpine
   docker exec kamal-proxy kamal-proxy deploy wedding \
-    --target="wedding:80" --host="wedding.przadki.site" --tls
+    --target="wedding:80" --host="wedding.przadki.us" --tls
 '
 ```
 
@@ -101,7 +101,7 @@ ssh root@46.62.230.247 'docker restart wedding'
 ssh root@46.62.230.247 '
   docker exec kamal-proxy kamal-proxy remove wedding
   docker exec kamal-proxy kamal-proxy deploy wedding \
-    --target="wedding:80" --host="wedding.przadki.site" --tls
+    --target="wedding:80" --host="wedding.przadki.us" --tls
 '
 ```
 
@@ -117,10 +117,10 @@ kamal-proxy (port 443, TLS termination)
 wedding container (nginx:alpine, port 80)
     |
     v
-/var/www/wedding.przadki.site (static files)
+/var/www/wedding (static files)
 ```
 
 ## DNS Configuration
 
 Make sure your DNS A record points to your server:
-- `wedding.przadki.site` -> `46.62.230.247`
+- `wedding.przadki.us` -> `46.62.230.247`

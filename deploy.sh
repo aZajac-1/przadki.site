@@ -3,7 +3,7 @@ set -e
 
 SERVER_IP="46.62.230.247"
 SERVER_USER="root"
-SERVER_PATH="/var/www/wedding.przadki.site"
+SERVER_PATH="/var/www/wedding"
 
 echo "Building..."
 npm run build
@@ -25,12 +25,17 @@ ssh ${SERVER_USER}@${SERVER_IP} '
     --name wedding \
     --network kamal \
     --restart unless-stopped \
-    -v /var/www/wedding.przadki.site:/usr/share/nginx/html:ro \
+    -v /var/www/wedding:/usr/share/nginx/html:ro \
     nginx:alpine
   docker exec kamal-proxy kamal-proxy deploy wedding \
     --target="wedding:80" \
+    --host="wedding.przadki.us" \
     --host="wedding.przadki.site" \
+    --canonical-host="wedding.przadki.us" \
     --tls
 '
 
-echo "Done! https://wedding.przadki.site"
+# przadki.site is kept only so kamal-proxy can 301 it to przadki.us
+# (via --canonical-host) until the domain expires 2026-10-20. After that,
+# drop the --host="wedding.przadki.site" line and --canonical-host.
+echo "Done! https://wedding.przadki.us"

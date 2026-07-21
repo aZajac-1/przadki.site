@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A React 19 + TypeScript wedding event website (wedding.przadki.site) for Ola and Piotr's wedding on July 4, 2026. Hosted on a Hetzner server with automated deployment.
+A React 19 + TypeScript wedding event website (wedding.przadki.us) for Ola and Piotr's wedding on July 4, 2026. Hosted on a Hetzner server with automated deployment.
 
 ## Commands
 

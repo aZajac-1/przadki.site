@@ -8,7 +8,7 @@ set -e
 
 SERVER_USER="root"
 SERVER_IP="46.62.230.247"
-SERVER_PATH="/var/www/wedding.przadki.site"
+SERVER_PATH="/var/www/wedding"
 BUILD_DIR="dist"
 
 echo "Building..."
@@ -51,11 +51,13 @@ ssh "$SERVER_USER@$SERVER_IP" bash <<EOF
       --name wedding \
       --network kamal \
       --restart unless-stopped \
-      -v /var/www/wedding.przadki.site:/usr/share/nginx/html:ro \
+      -v /var/www/wedding:/usr/share/nginx/html:ro \
       nginx:alpine
     docker exec kamal-proxy kamal-proxy deploy wedding \
       --target="wedding:80" \
+      --host="wedding.przadki.us" \
       --host="wedding.przadki.site" \
+      --canonical-host="wedding.przadki.us" \
       --tls
 
     echo "Server-side deployment complete!"
@@ -65,4 +67,4 @@ EOF
 echo "Cleaning up..."
 rm "$TEMP_TAR"
 
-echo "Done! https://wedding.przadki.site"
+echo "Done! https://wedding.przadki.us"
