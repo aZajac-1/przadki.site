@@ -56,3 +56,7 @@ src/
 
 - Do not commit or push to git without explicit permission
 - The `dist/` directory is the build output uploaded to production
+
+## Wspólna infrastruktura
+
+Serwer, domeny/porty dev i storage (R2) opisane w `~/Programming/hobby/przadki-infra/` (server.md, domains.md, cloudflare_r2.md). Nowe porty/subdomeny rejestrować tam.
