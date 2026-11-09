@@ -121,7 +121,7 @@ The deployment script will:
 1. Build the project locally
 2. Upload files to the server
 3. Reload nginx
-4. Your changes will be live at https://przadki.site
+4. Your changes will be live at https://wedding.przadki.us
 
 ## Troubleshooting
 
