@@ -30,12 +30,7 @@ ssh ${SERVER_USER}@${SERVER_IP} '
   docker exec kamal-proxy kamal-proxy deploy wedding \
     --target="wedding:80" \
     --host="wedding.przadki.us" \
-    --host="wedding.przadki.site" \
-    --canonical-host="wedding.przadki.us" \
     --tls
 '
 
-# przadki.site is kept only so kamal-proxy can 301 it to przadki.us
-# (via --canonical-host) until the domain expires 2026-10-20. After that,
-# drop the --host="wedding.przadki.site" line and --canonical-host.
 echo "Done! https://wedding.przadki.us"

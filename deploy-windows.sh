@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Windows-friendly deployment script for wedding.przadki.site
+# Windows-friendly deployment script for wedding.przadki.us
 # Run this script FROM YOUR LOCAL MACHINE using Git Bash
 # This version uses SCP instead of rsync
 
@@ -56,8 +56,6 @@ ssh "$SERVER_USER@$SERVER_IP" bash <<EOF
     docker exec kamal-proxy kamal-proxy deploy wedding \
       --target="wedding:80" \
       --host="wedding.przadki.us" \
-      --host="wedding.przadki.site" \
-      --canonical-host="wedding.przadki.us" \
       --tls
 
     echo "Server-side deployment complete!"
